@@ -663,7 +663,7 @@
     <section class="product-details">
       <div class="product-title-section">
         <h1 class="product-title">PEDA FORM // MULE 01</h1>
-        <div class="product-price">590 SEK</div>
+        <div class="product-price">$60 USD</div>
       </div>
 
       <div class="product-description">
@@ -674,7 +674,7 @@
         <span>COLORWAY: TAUPE / ASH MUD</span>
         <span>MATERIAL: 100% INJECTION EVA // STEEL ALLOY</span>
         <span>CARE: 100% WATER RESISTANT // WIPE CLEAN</span>
-        <span>SHIPPING: 1-2 DAYS NATIONWIDE / WORLDWIDE DISPATCH</span>
+        <span>SHIPPING: WORLDWIDE DISPATCH AVAILABLE</span>
       </div>
 
       <div class="size-section">
@@ -692,7 +692,7 @@
           <button class="size-btn" onclick="selectSize(this)">45</button>
         </div>
 
-        <button class="add-btn" id="addBtn" onclick="addToCart()">ADD TO BAG — 590 SEK</button>
+        <button class="add-btn" id="addBtn" onclick="addToCart()">ADD TO BAG — $60 USD</button>
       </div>
     </section>
 
@@ -747,7 +747,7 @@
         <p>Fully water-resistant monocoque build that dries instantly.</p>
       </div>
       <div class="adv-item">
-        <h4>590 SEK</h4>
+        <h4>$60 USD</h4>
         <p>Direct from manufacturer. No middlemen, no artificial hype markups.</p>
       </div>
     </div>
@@ -769,7 +769,7 @@
     <div class="cart-footer">
       <div class="cart-total">
         <span>SUBTOTAL</span>
-        <span id="cartTotal">0 SEK</span>
+        <span id="cartTotal">$0 USD</span>
       </div>
       <button class="checkout-btn" id="checkoutBtn" onclick="openCheckout()">PROCEED TO CHECKOUT</button>
     </div>
@@ -787,7 +787,7 @@
         <div style="margin-bottom: 8px;">SELECT PAYMENT METHOD:</div>
         <div class="payment-options">
           <button class="pay-tab active" onclick="setPayMethod(this)">KLARNA</button>
-          <button class="pay-tab" onclick="setPayMethod(this)">SWISH</button>
+          <button class="pay-tab" onclick="setPayMethod(this)">PAYPAL</button>
           <button class="pay-tab" onclick="setPayMethod(this)">APPLE PAY</button>
           <button class="pay-tab" onclick="setPayMethod(this)">CARD</button>
         </div>
@@ -810,7 +810,7 @@
 
       <div style="border-top: 1px solid var(--border-color); padding-top: 16px; display: flex; justify-content: space-between; font-weight: 600;">
         <span>TOTAL PAYABLE (INCL. SHIPPING):</span>
-        <span id="checkoutTotalAmount">590 SEK</span>
+        <span id="checkoutTotalAmount">$60 USD</span>
       </div>
 
       <button class="pay-action-btn" onclick="completeOrder()">COMPLETE ORDER</button>
@@ -870,7 +870,7 @@
        ========================================= */
     let cart = [];
     let selectedSize = null;
-    const ITEM_PRICE = 590;
+    const ITEM_PRICE = 60; // 60 USD
 
     function selectSize(btn) {
       document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
@@ -880,7 +880,7 @@
       document.getElementById('sizeError').classList.remove('visible');
       const addBtn = document.getElementById('addBtn');
       addBtn.classList.remove('error-state');
-      addBtn.textContent = `ADD TO BAG — ${ITEM_PRICE} SEK`;
+      addBtn.textContent = `ADD TO BAG — $${ITEM_PRICE} USD`;
     }
 
     function addToCart() {
@@ -893,7 +893,7 @@
         addBtn.textContent = "[ SELECT SIZE FIRST ]";
 
         setTimeout(() => {
-          addBtn.textContent = `ADD TO BAG — ${ITEM_PRICE} SEK`;
+          addBtn.textContent = `ADD TO BAG — $${ITEM_PRICE} USD`;
           addBtn.classList.remove('error-state');
         }, 2200);
         return;
@@ -925,7 +925,7 @@
 
       if (cart.length === 0) {
         container.innerHTML = '<div style="color: var(--muted-color); margin-top: 20px;">BAG IS CURRENTLY EMPTY.</div>';
-        totalEl.textContent = '0 SEK';
+        totalEl.textContent = '$0 USD';
         return;
       }
 
@@ -942,12 +942,12 @@
             <div style="color: var(--muted-color); font-size: 10px;">TAUPE // SIZE ${item.size}</div>
             <button class="remove-btn" onclick="removeFromCart(${item.id})">[ REMOVE ]</button>
           </div>
-          <div>${item.price} SEK</div>
+          <div>$${item.price} USD</div>
         `;
         container.appendChild(itemEl);
       });
 
-      totalEl.textContent = `${total} SEK`;
+      totalEl.textContent = `$${total} USD`;
     }
 
     function toggleCart(forceOpen = false) {
@@ -976,7 +976,7 @@
       if (cart.length === 0) return;
       
       const total = cart.reduce((acc, item) => acc + item.price, 0);
-      document.getElementById('checkoutTotalAmount').textContent = `${total} SEK`;
+      document.getElementById('checkoutTotalAmount').textContent = `$${total} USD`;
       
       toggleCart(false);
       document.getElementById('checkoutModal').classList.add('active');
@@ -992,19 +992,4 @@
     }
 
     function completeOrder() {
-      const content = document.getElementById('checkoutContent');
-      content.innerHTML = `
-        <div style="text-align: center; padding: 40px 0; display: flex; flex-direction: column; gap: 16px;">
-          <div style="font-size: 16px; font-weight: 600;">ORDER CONFIRMED // #PF-${Math.floor(100000 + Math.random() * 900000)}</div>
-          <div style="color: #4a453f; line-height: 1.8; text-transform: none;">
-            Thank you for your order. We are packaging your PEDA FORM MULE 01 and will send tracking details via email within 24 hours.
-          </div>
-          <button class="pay-action-btn" onclick="location.reload()" style="margin-top: 16px;">BACK TO STORE</button>
-        </div>
-      `;
-      cart = [];
-      updateCartUI();
-    }
-  </script>
-</body>
-</html>
+      const content = document.getElementById('c

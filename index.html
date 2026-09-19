@@ -1,1 +1,475 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SLIDE // SUPPLY</title>
+  <style>
+    /* =========================================
+       1. GRUNDINSTÄLLNINGAR & YEEZY-ESTETIK
+       ========================================= */
+    :root {
+      --bg-color: #e5e1d8;        /* Jordnära "Bone / Chalk" */
+      --text-color: #121212;      /* Nästan svart */
+      --muted-color: #7d7871;     /* Dämpad text */
+      --border-color: #121212;
+      --font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Neue Haas Grotesk", sans-serif;
+    }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-family);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      overflow-x: hidden;
+    }
+
+    /* =========================================
+       2. HEADER
+       ========================================= */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 32px;
+      background: transparent;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    header a, header button {
+      pointer-events: auto;
+      color: var(--text-color);
+      text-decoration: none;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: inherit;
+      letter-spacing: inherit;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    /* =========================================
+       3. PRODUKTRUTNÄT (THE GRID)
+       ========================================= */
+    main {
+      padding: 120px 32px 64px 32px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 64px 40px;
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .image-container {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background-color: #ded9cf;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .image-container img {
+      width: 80%;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 25px rgba(0,0,0,0.12));
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .product-card:hover .image-container img {
+      transform: scale(1.05);
+    }
+
+    .product-info {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .product-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .product-color {
+      color: var(--muted-color);
+    }
+
+    /* Storlekar & Köpknapp direkt under kortet */
+    .purchase-controls {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .size-selector {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .size-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      padding: 6px 10px;
+      font-family: inherit;
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .size-btn.selected,
+    .size-btn:hover {
+      background-color: var(--text-color);
+      color: var(--bg-color);
+    }
+
+    .add-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--text-color);
+      color: var(--bg-color);
+      border: none;
+      font-family: inherit;
+      font-size: inherit;
+      letter-spacing: inherit;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: opacity 0.2s;
+    }
+
+    .add-btn:hover {
+      opacity: 0.85;
+    }
+
+    /* =========================================
+       4. VARUKORG (SLIDE-OVER DRAWER)
+       ========================================= */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 100%;
+      max-width: 400px;
+      height: 100%;
+      background-color: var(--bg-color);
+      border-left: 1px solid var(--border-color);
+      z-index: 200;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 32px;
+    }
+
+    .cart-drawer.open {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-footer {
+      border-top: 1px solid var(--border-color);
+      padding-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--text-color);
+      color: var(--bg-color);
+      border: none;
+      font-family: inherit;
+      font-size: inherit;
+      letter-spacing: inherit;
+      cursor: pointer;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.25);
+      z-index: 150;
+      display: none;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* =========================================
+       5. FOOTER
+       ========================================= */
+    footer {
+      padding: 64px 32px 32px 32px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted-color);
+      border-top: 1px solid #d4cfc5;
+      margin-top: 64px;
+    }
+
+    @media (max-width: 768px) {
+      main { padding: 90px 16px 32px 16px; }
+      header { padding: 16px; }
+      .product-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div>SLIDE // SUPPLY™</div>
+    <div>2026 ARCHIVE</div>
+    <button id="cartBtn" onclick="toggleCart()">BAG (<span id="cartCount">0</span>)</button>
+  </header>
+
+  <!-- PRODUKTER -->
+  <main>
+    <div class="product-grid">
+
+      <!-- Produkt 1 -->
+      <article class="product-card" data-name="SLIDE 01" data-color="BONE" data-price="850">
+        <div class="image-container">
+          <!-- Placeholder bild med neutral toffelform -->
+          <img src="https://images.unsplash.com/photo-1603808033192-082d6919d3e1?auto=format&fit=crop&q=80&w=800" alt="Slide Bone">
+        </div>
+        <div class="product-info">
+          <div class="product-meta">
+            <span>SLIDE 01</span>
+            <span class="product-color">BONE</span>
+          </div>
+          <div>850 SEK</div>
+        </div>
+        <div class="purchase-controls">
+          <div class="size-selector">
+            <button class="size-btn" onclick="selectSize(this)">40</button>
+            <button class="size-btn" onclick="selectSize(this)">41</button>
+            <button class="size-btn" onclick="selectSize(this)">42</button>
+            <button class="size-btn" onclick="selectSize(this)">43</button>
+            <button class="size-btn" onclick="selectSize(this)">44</button>
+          </div>
+          <button class="add-btn" onclick="addToCart(this)">ADD TO BAG</button>
+        </div>
+      </article>
+
+      <!-- Produkt 2 -->
+      <article class="product-card" data-name="SLIDE 01" data-color="ONYX" data-price="850">
+        <div class="image-container">
+          <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=800" alt="Slide Onyx">
+        </div>
+        <div class="product-info">
+          <div class="product-meta">
+            <span>SLIDE 01</span>
+            <span class="product-color">ONYX</span>
+          </div>
+          <div>850 SEK</div>
+        </div>
+        <div class="purchase-controls">
+          <div class="size-selector">
+            <button class="size-btn" onclick="selectSize(this)">40</button>
+            <button class="size-btn" onclick="selectSize(this)">41</button>
+            <button class="size-btn" onclick="selectSize(this)">42</button>
+            <button class="size-btn" onclick="selectSize(this)">43</button>
+            <button class="size-btn" onclick="selectSize(this)">44</button>
+          </div>
+          <button class="add-btn" onclick="addToCart(this)">ADD TO BAG</button>
+        </div>
+      </article>
+
+      <!-- Produkt 3 -->
+      <article class="product-card" data-name="SLIDE 01" data-color="RESIN" data-price="850">
+        <div class="image-container">
+          <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&q=80&w=800" alt="Slide Resin">
+        </div>
+        <div class="product-info">
+          <div class="product-meta">
+            <span>SLIDE 01</span>
+            <span class="product-color">RESIN</span>
+          </div>
+          <div>850 SEK</div>
+        </div>
+        <div class="purchase-controls">
+          <div class="size-selector">
+            <button class="size-btn" onclick="selectSize(this)">40</button>
+            <button class="size-btn" onclick="selectSize(this)">41</button>
+            <button class="size-btn" onclick="selectSize(this)">42</button>
+            <button class="size-btn" onclick="selectSize(this)">43</button>
+            <button class="size-btn" onclick="selectSize(this)">44</button>
+          </div>
+          <button class="add-btn" onclick="addToCart(this)">ADD TO BAG</button>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- VARUKORG DRAW & OVERLAY -->
+  <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <span>BAG REVIEW</span>
+      <button onclick="toggleCart()" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:inherit;">[ CLOSE ]</button>
+    </div>
+    <div class="cart-items" id="cartItemsContainer">
+      <div style="color: var(--muted-color); margin-top: 20px;">BAG IS CURRENTLY EMPTY.</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>SUBTOTAL</span>
+        <span id="cartTotal">0 SEK</span>
+      </div>
+      <button class="checkout-btn" onclick="alert('Skickar till betalning...')">PROCEED TO CHECKOUT</button>
+    </div>
+  </aside>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>ALL RIGHTS RESERVED // STOCKHOLM</div>
+    <div>REGION: SE [SEK]</div>
+  </footer>
+
+  <!-- MINIMAL LOGIK -->
+  <script>
+    let cart = [];
+
+    function selectSize(btn) {
+      // Välj storlek inom samma produktkort
+      const parent = btn.closest('.size-selector');
+      parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function addToCart(btn) {
+      const card = btn.closest('.product-card');
+      const selectedSize = card.querySelector('.size-btn.selected');
+
+      if (!selectedSize) {
+        alert('VÄNLIGEN VÄLJ EN STORLEK FÖRST');
+        return;
+      }
+
+      const product = {
+        name: card.dataset.name,
+        color: card.dataset.color,
+        price: parseInt(card.dataset.price),
+        size: selectedSize.textContent
+      };
+
+      cart.push(product);
+      updateCartUI();
+      toggleCart(true); // Öppna varukorgen automatiskt
+    }
+
+    function updateCartUI() {
+      const container = document.getElementById('cartItemsContainer');
+      const totalEl = document.getElementById('cartTotal');
+      const countEl = document.getElementById('cartCount');
+
+      countEl.textContent = cart.length;
+
+      if (cart.length === 0) {
+        container.innerHTML = '<div style="color: var(--muted-color); margin-top: 20px;">BAG IS EMPTY.</div>';
+        totalEl.textContent = '0 SEK';
+        return;
+      }
+
+      container.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += item.price;
+        const itemEl = document.createElement('div');
+        itemEl.className = 'cart-item';
+        itemEl.innerHTML = `
+          <div>
+            <div>${item.name} — ${item.color}</div>
+            <div style="color: var(--muted-color); margin-top: 2px;">SZ: ${item.size}</div>
+          </div>
+          <div>${item.price} SEK</div>
+        `;
+        container.appendChild(itemEl);
+      });
+
+      totalEl.textContent = `${total} SEK`;
+    }
+
+    function toggleCart(forceOpen = false) {
+      const drawer = document.getElementById('cartDrawer');
+      const overlay = document.getElementById('overlay');
+
+      if (forceOpen || !drawer.classList.contains('open')) {
+        drawer.classList.add('open');
+        overlay.classList.add('active');
+      } else {
+        drawer.classList.remove('open');
+        overlay.classList.remove('active');
+      }
+    }
+  </script>
+</body>
+</html>

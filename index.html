@@ -14,6 +14,7 @@
       --muted-color: #7b766f;     /* Dämpad grå/brun */
       --border-color: #161514;
       --card-bg: #ded9cf;
+      --accent-error: #9e3d24;    /* Rå terrakotta/tegelröd */
       --font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Neue Haas Grotesk", sans-serif;
     }
 
@@ -157,6 +158,23 @@
       gap: 12px;
     }
 
+    .size-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .size-error-text {
+      color: var(--accent-error);
+      font-size: 10px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .size-error-text.visible {
+      opacity: 1;
+    }
+
     .size-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -185,17 +203,24 @@
       padding: 16px;
       background-color: var(--text-color);
       color: var(--bg-color);
-      border: none;
+      border: 1px solid var(--text-color);
       font-family: inherit;
       font-size: 11px;
       letter-spacing: 0.12em;
       cursor: pointer;
       text-transform: uppercase;
-      transition: opacity 0.2s;
+      transition: all 0.2s ease;
     }
 
     .add-btn:hover {
       opacity: 0.85;
+    }
+
+    /* Stil när man glömt välja storlek */
+    .add-btn.error-state {
+      background-color: var(--accent-error);
+      border-color: var(--accent-error);
+      color: #fff;
     }
 
     /* =========================================
@@ -269,6 +294,14 @@
       font-size: 11px;
       letter-spacing: inherit;
       cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .checkout-msg {
+      font-size: 10px;
+      color: var(--muted-color);
+      text-align: center;
+      display: none;
     }
 
     .overlay {
@@ -319,24 +352,17 @@
   <!-- HUVUDINNEHÅLL -->
   <main>
     
-    <!-- GALLERI MED DINA 4 BILDER FRÅN MAPPEN 'slides' -->
+    <!-- GALLERI MED DINA 4 BILDER -->
     <section class="product-gallery">
-      <!-- Bild 1 -->
       <div class="gallery-frame">
         <img src="slides/slide- (1).jpg" alt="PEDA FORM MULE 01 - 1">
       </div>
-
-      <!-- Bild 2 -->
       <div class="gallery-frame">
         <img src="slides/slide- (2).jpg" alt="PEDA FORM MULE 01 - 2">
       </div>
-
-      <!-- Bild 3 -->
       <div class="gallery-frame">
         <img src="slides/slide- (3).jpg" alt="PEDA FORM MULE 01 - 3">
       </div>
-
-      <!-- Bild 4 -->
       <div class="gallery-frame">
         <img src="slides/slide- (4).jpg" alt="PEDA FORM MULE 01 - 4">
       </div>
@@ -360,7 +386,11 @@
       </div>
 
       <div class="size-section">
-        <span>SELECT SIZE (EU):</span>
+        <div class="size-header">
+          <span>SELECT SIZE (EU):</span>
+          <span class="size-error-text" id="sizeError">VÄLJ EN STORLEK</span>
+        </div>
+        
         <div class="size-grid">
           <button class="size-btn" onclick="selectSize(this)">40</button>
           <button class="size-btn" onclick="selectSize(this)">41</button>
@@ -370,7 +400,7 @@
           <button class="size-btn" onclick="selectSize(this)">45</button>
         </div>
 
-        <button class="add-btn" onclick="addToCart()">ADD TO BAG</button>
+        <button class="add-btn" id="addBtn" onclick="addToCart()">ADD TO BAG</button>
       </div>
     </section>
 
@@ -384,15 +414,18 @@
       <span>BAG REVIEW</span>
       <button onclick="toggleCart()" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:inherit;">[ CLOSE ]</button>
     </div>
+    
     <div class="cart-items" id="cartItemsContainer">
       <div style="color: var(--muted-color); margin-top: 20px;">BAG IS CURRENTLY EMPTY.</div>
     </div>
+    
     <div class="cart-footer">
       <div class="cart-total">
         <span>SUBTOTAL</span>
         <span id="cartTotal">0 SEK</span>
       </div>
-      <button class="checkout-btn" onclick="alert('Skickar till betalning...')">PROCEED TO CHECKOUT</button>
+      <button class="checkout-btn" id="checkoutBtn" onclick="handleCheckout()">PROCEED TO CHECKOUT</button>
+      <div class="checkout-msg" id="checkoutMsg">SKICKAR TILL SÄKER BETALNING...</div>
     </div>
   </aside>
 
@@ -405,14 +438,33 @@
       document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       selectedSize = btn.textContent;
+
+      // Återställ eventuellt felmeddelande när kunden klickar på en storlek
+      const addBtn = document.getElementById('addBtn');
+      const sizeError = document.getElementById('sizeError');
+      sizeError.classList.remove('visible');
+      addBtn.classList.remove('error-state');
+      addBtn.textContent = "ADD TO BAG";
     }
 
     function addToCart() {
+      const addBtn = document.getElementById('addBtn');
+      const sizeError = document.getElementById('sizeError');
+
+      // Om ingen storlek är vald – visa feedback direkt på knappen utan popups
       if (!selectedSize) {
-        alert('VÄNLIGEN VÄLJ EN STORLEK FÖRST.');
+        sizeError.classList.add('visible');
+        addBtn.classList.add('error-state');
+        addBtn.textContent = "[ VÄLJ STORLEK FÖRST ]";
+
+        setTimeout(() => {
+          addBtn.textContent = "ADD TO BAG";
+          addBtn.classList.remove('error-state');
+        }, 2200);
         return;
       }
 
+      // Lägg i varukorg
       cart.push({
         name: 'PEDA FORM // MULE 01',
         color: 'TAUPE',
@@ -468,6 +520,23 @@
         drawer.classList.remove('open');
         overlay.classList.remove('active');
       }
+    }
+
+    function handleCheckout() {
+      const btn = document.getElementById('checkoutBtn');
+      const msg = document.getElementById('checkoutMsg');
+
+      if (cart.length === 0) return;
+
+      btn.textContent = "BEARBETAR...";
+      btn.style.opacity = "0.7";
+      msg.style.display = "block";
+
+      setTimeout(() => {
+        btn.textContent = "PROCEED TO CHECKOUT";
+        btn.style.opacity = "1";
+        msg.style.display = "none";
+      }, 3000);
     }
   </script>
 </body>

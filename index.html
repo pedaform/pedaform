@@ -41,7 +41,7 @@
     }
 
     /* =========================================
-       2. HEADER MED LOGO & SPRÅKVÄLJARE
+       2. HEADER MED SVG-LOGOTYP
        ========================================= */
     header {
       position: fixed;
@@ -68,7 +68,7 @@
     .header-right {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 32px;
     }
 
     .nav-links {
@@ -84,32 +84,6 @@
 
     .nav-links a:hover {
       opacity: 0.5;
-    }
-
-    /* Språkväljare */
-    .lang-selector {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      border: 1px solid var(--border-color);
-      padding: 4px 8px;
-    }
-
-    .lang-btn {
-      background: none;
-      border: none;
-      font-family: inherit;
-      font-size: 10px;
-      letter-spacing: inherit;
-      cursor: pointer;
-      color: var(--muted-color);
-      padding: 2px 4px;
-      transition: color 0.2s;
-    }
-
-    .lang-btn.active {
-      color: var(--text-color);
-      font-weight: 700;
     }
 
     header button.cart-trigger {
@@ -400,7 +374,7 @@
     }
 
     /* =========================================
-       5. VARUKORG (CART DRAWER)
+       5. CART DRAWER
        ========================================= */
     .cart-drawer {
       position: fixed;
@@ -601,7 +575,7 @@
     }
 
     /* =========================================
-       7. RESPONSIVITET
+       7. RESPONSIVITET (MOBIL)
        ========================================= */
     @media (max-width: 950px) {
       .hero-container {
@@ -634,7 +608,7 @@
 </head>
 <body>
 
-  <!-- HEADER MED SVG-LOGGA & SPRÅKVÄLJARE -->
+  <!-- HEADER MED SVG-LOGGA -->
   <header>
     <a href="#" class="header-logo" title="PEDA FORM">
       <svg viewBox="0 0 160 30" xmlns="http://www.w3.org/2000/svg">
@@ -652,19 +626,12 @@
 
     <div class="header-right">
       <nav class="nav-links">
-        <a href="#product" data-i18n="navProduct">PRODUCT</a>
-        <a href="#philosophy" data-i18n="navWhy">WHY US</a>
+        <a href="#product">PRODUCT</a>
+        <a href="#philosophy">WHY US</a>
       </nav>
 
-      <!-- Minimalistisk Språkväljare -->
-      <div class="lang-selector">
-        <button class="lang-btn active" id="btn-en" onclick="setLanguage('en')">EN</button>
-        <span style="color: var(--muted-color); font-size: 9px;">/</span>
-        <button class="lang-btn" id="btn-sv" onclick="setLanguage('sv')">SV</button>
-      </div>
-
       <button class="cart-trigger" onclick="toggleCart()">
-        <span data-i18n="cartBag">BAG</span> (<span id="cartCount">0</span>)
+        BAG (<span id="cartCount">0</span>)
       </button>
     </div>
   </header>
@@ -672,7 +639,7 @@
   <!-- PRODUKTSEKTION -->
   <main class="hero-container" id="product">
     
-    <!-- BILDVISARE -->
+    <!-- STOR BILDVISARE -->
     <section>
       <div class="viewer-box" id="mainViewer" onclick="nextImage()">
         <img id="activeSlideImage" src="slides/slide- (1).jpg" alt="Peda Form Slide Large">
@@ -699,21 +666,21 @@
         <div class="product-price">590 SEK</div>
       </div>
 
-      <div class="product-description" data-i18n="productDesc">
+      <div class="product-description">
         ONE-PIECE INJECTION MOLDED EVA BODY WITH MEDICALLY CONTOURED ARCH. BRUSHED STAINLESS STEEL BUCKLE WITH INDUSTRIAL RUBBER STRAP FOR OPTIMAL LOCKDOWN.
       </div>
 
       <div class="meta-spec">
-        <span data-i18n="specColor">COLORWAY: TAUPE / ASH MUD</span>
-        <span data-i18n="specMaterial">MATERIAL: 100% INJECTION EVA // STEEL ALLOY</span>
-        <span data-i18n="specCare">CARE: 100% WATER RESISTANT // WIPE CLEAN</span>
-        <span data-i18n="specShipping">SHIPPING: 1-2 DAYS NATIONWIDE / WORLDWIDE DISPATCH</span>
+        <span>COLORWAY: TAUPE / ASH MUD</span>
+        <span>MATERIAL: 100% INJECTION EVA // STEEL ALLOY</span>
+        <span>CARE: 100% WATER RESISTANT // WIPE CLEAN</span>
+        <span>SHIPPING: 1-2 DAYS NATIONWIDE / WORLDWIDE DISPATCH</span>
       </div>
 
       <div class="size-section">
         <div class="size-header">
-          <span data-i18n="selectSize">SELECT SIZE (EU):</span>
-          <span class="size-error-text" id="sizeError" data-i18n="selectSizeError">PLEASE SELECT A SIZE</span>
+          <span>SELECT SIZE (EU):</span>
+          <span class="size-error-text" id="sizeError">PLEASE SELECT A SIZE</span>
         </div>
         
         <div class="size-grid">
@@ -731,9 +698,9 @@
 
   </main>
 
-  <!-- HOMEPAGE / WHY PEDA FORM -->
+  <!-- WHY PEDA FORM -->
   <section class="philosophy-section" id="philosophy">
-    <h2 class="section-title" data-i18n="whyTitle">ENGINEERING // WHY PEDA FORM</h2>
+    <h2 class="section-title">ENGINEERING // WHY PEDA FORM</h2>
     
     <div class="comparison-grid">
       
@@ -741,7 +708,7 @@
       <article class="comparison-card">
         <span class="comparison-badge">COMPARISON // 01</span>
         <h3 class="comparison-name">VS B*RKENSTOCK</h3>
-        <p class="comparison-body" data-i18n="compBirk">
+        <p class="comparison-body">
           Cork and suede degrade rapidly and break down when exposed to rain, salt, and moisture. PEDA FORM is molded in dense, dimensionally stable EVA foam that withstands water, mud, and everyday wear without losing bounce or holding odor.
         </p>
       </article>
@@ -750,7 +717,7 @@
       <article class="comparison-card">
         <span class="comparison-badge">COMPARISON // 02</span>
         <h3 class="comparison-name">VS Y*EZY SLIDE</h3>
-        <p class="comparison-body" data-i18n="compYeezy">
+        <p class="comparison-body">
           Y*ezy slides completely lack fit adjustability, causing the foot to slip and slide during longer walks. PEDA FORM integrates a brushed steel and vulcanized rubber buckle to lock the instep with zero pressure points.
         </p>
       </article>
@@ -759,7 +726,7 @@
       <article class="comparison-card">
         <span class="comparison-badge">COMPARISON // 03</span>
         <h3 class="comparison-name">VS CR*CS</h3>
-        <p class="comparison-body" data-i18n="compCrocs">
+        <p class="comparison-body">
           Standard clogs lack orthopedic arch geometry and feature a clunky, hollow appearance. We replaced the cheap plastic feel with a dense matte micro-texture and an architectural silhouette engineered for both street styling and muscle recovery.
         </p>
       </article>
@@ -768,43 +735,43 @@
 
     <div class="our-advantage">
       <div class="adv-item">
-        <h4 data-i18n="adv1Title">ZERO-DROP HEEL</h4>
-        <p data-i18n="adv1Desc">Neutral foot positioning without elevated heel drop to relieve lower back and knee stress.</p>
+        <h4>ZERO-DROP HEEL</h4>
+        <p>Neutral foot positioning without elevated heel drop to relieve lower back and knee stress.</p>
       </div>
       <div class="adv-item">
-        <h4 data-i18n="adv2Title">BRUSHED STEEL</h4>
-        <p data-i18n="adv2Desc">P|F engraved custom hardware that will never rust or degrade.</p>
+        <h4>BRUSHED STEEL</h4>
+        <p>P|F engraved custom hardware that will never rust or degrade.</p>
       </div>
       <div class="adv-item">
-        <h4 data-i18n="adv3Title">WATERPROOF</h4>
-        <p data-i18n="adv3Desc">Fully water-resistant monocoque build that dries instantly.</p>
+        <h4>WATERPROOF</h4>
+        <p>Fully water-resistant monocoque build that dries instantly.</p>
       </div>
       <div class="adv-item">
         <h4>590 SEK</h4>
-        <p data-i18n="adv4Desc">Direct from manufacturer. No middlemen, no artificial hype markups.</p>
+        <p>Direct from manufacturer. No middlemen, no artificial hype markups.</p>
       </div>
     </div>
   </section>
 
-  <!-- VARUKORG -->
+  <!-- CART DRAWER -->
   <div class="overlay" id="overlay" onclick="closeAll()"></div>
 
   <aside class="cart-drawer" id="cartDrawer">
     <div class="cart-header">
-      <span data-i18n="cartTitle">BAG REVIEW</span>
-      <button onclick="toggleCart()" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:inherit;">[ <span data-i18n="close">CLOSE</span> ]</button>
+      <span>BAG REVIEW</span>
+      <button onclick="toggleCart()" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:inherit;">[ CLOSE ]</button>
     </div>
     
     <div class="cart-items" id="cartItemsContainer">
-      <!-- Innehåll renderas via JS -->
+      <div style="color: var(--muted-color); margin-top: 20px;">BAG IS CURRENTLY EMPTY.</div>
     </div>
     
     <div class="cart-footer">
       <div class="cart-total">
-        <span data-i18n="subtotal">SUBTOTAL</span>
+        <span>SUBTOTAL</span>
         <span id="cartTotal">0 SEK</span>
       </div>
-      <button class="checkout-btn" id="checkoutBtn" onclick="openCheckout()" data-i18n="checkoutBtn">PROCEED TO CHECKOUT</button>
+      <button class="checkout-btn" id="checkoutBtn" onclick="openCheckout()">PROCEED TO CHECKOUT</button>
     </div>
   </aside>
 
@@ -813,175 +780,45 @@
     <div class="checkout-wrapper" id="checkoutContent">
       <div class="checkout-top">
         <span>EXPRESS CHECKOUT // PEDA FORM™</span>
-        <button onclick="closeCheckout()" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:inherit;">[ <span data-i18n="cancel">CANCEL</span> ]</button>
+        <button onclick="closeCheckout()" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:inherit;">[ CANCEL ]</button>
       </div>
 
       <div>
-        <div style="margin-bottom: 8px;" data-i18n="selectPayment">SELECT PAYMENT METHOD:</div>
+        <div style="margin-bottom: 8px;">SELECT PAYMENT METHOD:</div>
         <div class="payment-options">
           <button class="pay-tab active" onclick="setPayMethod(this)">KLARNA</button>
           <button class="pay-tab" onclick="setPayMethod(this)">SWISH</button>
           <button class="pay-tab" onclick="setPayMethod(this)">APPLE PAY</button>
-          <button class="pay-tab" onclick="setPayMethod(this)" data-i18n="payCard">CARD</button>
+          <button class="pay-tab" onclick="setPayMethod(this)">CARD</button>
         </div>
       </div>
 
       <div class="form-group">
-        <label data-i18n="emailLabel">EMAIL FOR ORDER CONFIRMATION:</label>
-        <input type="email" placeholder="name@domain.com" required>
+        <label>EMAIL FOR ORDER CONFIRMATION:</label>
+        <input type="email" placeholder="NAME@DOMAIN.COM" required>
       </div>
 
       <div class="form-group">
-        <label data-i18n="addressLabel">SHIPPING ADDRESS:</label>
-        <input type="text" data-i18n-ph="namePlaceholder" placeholder="FULL NAME">
-        <input type="text" data-i18n-ph="addressPlaceholder" placeholder="STREET ADDRESS">
+        <label>SHIPPING ADDRESS:</label>
+        <input type="text" placeholder="FULL NAME">
+        <input type="text" placeholder="STREET ADDRESS">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-          <input type="text" data-i18n-ph="zipPlaceholder" placeholder="POSTAL CODE">
-          <input type="text" data-i18n-ph="cityPlaceholder" placeholder="CITY">
+          <input type="text" placeholder="POSTAL CODE">
+          <input type="text" placeholder="CITY">
         </div>
       </div>
 
       <div style="border-top: 1px solid var(--border-color); padding-top: 16px; display: flex; justify-content: space-between; font-weight: 600;">
-        <span data-i18n="totalDue">TOTAL PAYABLE (INCL. SHIPPING):</span>
+        <span>TOTAL PAYABLE (INCL. SHIPPING):</span>
         <span id="checkoutTotalAmount">590 SEK</span>
       </div>
 
-      <button class="pay-action-btn" onclick="completeOrder()" data-i18n="completeOrderBtn">COMPLETE ORDER</button>
+      <button class="pay-action-btn" onclick="completeOrder()">COMPLETE ORDER</button>
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIK & SPRÅK -->
+  <!-- JAVASCRIPT LOGIK -->
   <script>
-    /* =========================================
-       SPRÅKDATA (TRANSLATIONS)
-       ========================================= */
-    const translations = {
-      en: {
-        navProduct: "PRODUCT",
-        navWhy: "WHY US",
-        cartBag: "BAG",
-        productDesc: "ONE-PIECE INJECTION MOLDED EVA BODY WITH MEDICALLY CONTOURED ARCH. BRUSHED STAINLESS STEEL BUCKLE WITH INDUSTRIAL RUBBER STRAP FOR OPTIMAL LOCKDOWN.",
-        specColor: "COLORWAY: TAUPE / ASH MUD",
-        specMaterial: "MATERIAL: 100% INJECTION EVA // STEEL ALLOY",
-        specCare: "CARE: 100% WATER RESISTANT // WIPE CLEAN",
-        specShipping: "SHIPPING: 1-2 DAYS NATIONWIDE / WORLDWIDE DISPATCH",
-        selectSize: "SELECT SIZE (EU):",
-        selectSizeError: "PLEASE SELECT A SIZE",
-        addBtnDefault: "ADD TO BAG — 590 SEK",
-        addBtnError: "[ SELECT SIZE FIRST ]",
-        whyTitle: "ENGINEERING // WHY PEDA FORM",
-        compBirk: "Cork and suede degrade rapidly and break down when exposed to rain, salt, and moisture. PEDA FORM is molded in dense, dimensionally stable EVA foam that withstands water, mud, and everyday wear without losing bounce or holding odor.",
-        compYeezy: "Y*ezy slides completely lack fit adjustability, causing the foot to slip and slide during longer walks. PEDA FORM integrates a brushed steel and vulcanized rubber buckle to lock the instep with zero pressure points.",
-        compCrocs: "Standard clogs lack orthopedic arch geometry and feature a clunky, hollow appearance. We replaced the cheap plastic feel with a dense matte micro-texture and an architectural silhouette engineered for both street styling and muscle recovery.",
-        adv1Title: "ZERO-DROP HEEL",
-        adv1Desc: "Neutral foot positioning without elevated heel drop to relieve lower back and knee stress.",
-        adv2Title: "BRUSHED STEEL",
-        adv2Desc: "P|F engraved custom hardware that will never rust or degrade.",
-        adv3Title: "WATERPROOF",
-        adv3Desc: "Fully water-resistant monocoque build that dries instantly.",
-        adv4Desc: "Direct from manufacturer. No middlemen, no artificial hype markups.",
-        cartTitle: "BAG REVIEW",
-        close: "CLOSE",
-        cancel: "CANCEL",
-        emptyBag: "BAG IS CURRENTLY EMPTY.",
-        remove: "REMOVE",
-        subtotal: "SUBTOTAL",
-        checkoutBtn: "PROCEED TO CHECKOUT",
-        selectPayment: "SELECT PAYMENT METHOD:",
-        payCard: "CARD",
-        emailLabel: "EMAIL FOR ORDER CONFIRMATION:",
-        addressLabel: "SHIPPING ADDRESS:",
-        namePlaceholder: "FULL NAME",
-        addressPlaceholder: "STREET ADDRESS",
-        zipPlaceholder: "POSTAL CODE",
-        cityPlaceholder: "CITY",
-        totalDue: "TOTAL PAYABLE (INCL. SHIPPING):",
-        completeOrderBtn: "COMPLETE ORDER",
-        orderSuccessTitle: "ORDER CONFIRMED",
-        orderSuccessMsg: "Thank you for your order. We are packaging your PEDA FORM MULE 01 and will send tracking details via email within 24 hours.",
-        backToHome: "BACK TO STORE"
-      },
-      sv: {
-        navProduct: "PRODUKT",
-        navWhy: "VARFÖR OSS",
-        cartBag: "VARUKORG",
-        productDesc: "GJUTEN I ETT STYCKE MED MEDICINSKT SKULPTERAD HÅLFOT. BORSTAT ROSTFRITT STÅLSPÄNNE MED INDUSTRIELLT GUMMIBAND FÖR PERFEKT PASSFORM.",
-        specColor: "FÄRG: TAUPE / ASH MUD",
-        specMaterial: "MATERIAL: 100% INJECTION EVA // STEEL ALLOY",
-        specCare: "SKÖTSEL: 100% VATTENTÅLIG // AVTORKNINGSBAR",
-        specShipping: "LEVERANS: 1-2 DAGAR INOM SVERIGE",
-        selectSize: "VÄLJ STORLEK (EU):",
-        selectSizeError: "VÄLJ EN STORLEK",
-        addBtnDefault: "LÄGG I VARUKORG — 590 SEK",
-        addBtnError: "[ VÄLJ STORLEK FÖRST ]",
-        whyTitle: "DESIGN & FUNKTION // VARFÖR PEDA FORM",
-        compBirk: "Kork och mocka slits snabbt och förstörs av regn, salt och fukt. PEDA FORM är helgjuten i formstabil EVA-cellpolymer som tål vatten, lera och daglig användning utan att förlora dämpningen eller lukta illa.",
-        compYeezy: "Y*ezy saknar helt passformsjustering vilket leder till att foten glider runt vid längre promenader. PEDA FORM integrerar ett spänne i borstat stål och gummi som låser vristen utan tryckpunkter.",
-        compCrocs: "Standardtofflor saknar ortopedisk geometri och har en klumpig, ihålig estetik. Vi har ersatt plastkänslan med en solid, matt ytstruktur och en arkitektonisk silhuett godkänd för både stadsmiljö och återhämtning.",
-        adv1Title: "ZERO-DROP HÄL",
-        adv1Desc: "Naturlig hållning utan upphöjd häl som avlastar ländrygg och knän.",
-        adv2Title: "BORSTAT STÅL",
-        adv2Desc: "Hårdvara med P|F gravyr som inte rostar eller slits ut.",
-        adv3Title: "VATTENTÅLIG",
-        adv3Desc: "Helt vattentät konstruktion som torkar omedelbart.",
-        adv4Desc: "Direkt från fabrik. Inga mellanhänder eller konstgjord hype-påslag.",
-        cartTitle: "VARUKORG",
-        close: "STÄNG",
-        cancel: "AVBRYT",
-        emptyBag: "VARUKORGEN ÄR TOM.",
-        remove: "TA BORT",
-        subtotal: "DELTOTAL",
-        checkoutBtn: "GÅ TILL KASSAN",
-        selectPayment: "VÄLJ BETALSÄTT:",
-        payCard: "KORT",
-        emailLabel: "E-POST FÖR ORDERBEKRÄFTELSE:",
-        addressLabel: "LEVERANSADRESS:",
-        namePlaceholder: "FÖR- OCH EFTERNAMN",
-        addressPlaceholder: "GATUADRESS",
-        zipPlaceholder: "POSTNUMMER",
-        cityPlaceholder: "ORT",
-        totalDue: "TOTALT ATT BETALA (INKL. FRAKT):",
-        completeOrderBtn: "SLUTFÖR KÖP",
-        orderSuccessTitle: "ORDER BEKRÄFTAD",
-        orderSuccessMsg: "Tack för din beställning. Vi packar dina PEDA FORM MULE 01 och skickar spårningsnummer via e-post inom 24 timmar.",
-        backToHome: "TILLBAKA TILL STARTSIDAN"
-      }
-    };
-
-    let currentLang = 'en';
-
-    function setLanguage(lang) {
-      currentLang = lang;
-      
-      // Uppdatera knappars aktiva klass
-      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-      document.getElementById('btn-sv').classList.toggle('active', lang === 'sv');
-
-      // Översätt alla element med data-i18n
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) {
-          el.textContent = translations[lang][key];
-        }
-      });
-
-      // Översätt placeholders
-      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-        const key = el.getAttribute('data-i18n-ph');
-        if (translations[lang][key]) {
-          el.placeholder = translations[lang][key];
-        }
-      });
-
-      // Uppdatera köpknappen om ingen felstatus råder
-      const addBtn = document.getElementById('addBtn');
-      if (!addBtn.classList.contains('error-state')) {
-        addBtn.textContent = translations[lang].addBtnDefault;
-      }
-
-      updateCartUI();
-    }
-
     /* =========================================
        BILDKARUSELL
        ========================================= */
@@ -1043,7 +880,7 @@
       document.getElementById('sizeError').classList.remove('visible');
       const addBtn = document.getElementById('addBtn');
       addBtn.classList.remove('error-state');
-      addBtn.textContent = translations[currentLang].addBtnDefault;
+      addBtn.textContent = `ADD TO BAG — ${ITEM_PRICE} SEK`;
     }
 
     function addToCart() {
@@ -1053,10 +890,10 @@
       if (!selectedSize) {
         sizeError.classList.add('visible');
         addBtn.classList.add('error-state');
-        addBtn.textContent = translations[currentLang].addBtnError;
+        addBtn.textContent = "[ SELECT SIZE FIRST ]";
 
         setTimeout(() => {
-          addBtn.textContent = translations[currentLang].addBtnDefault;
+          addBtn.textContent = `ADD TO BAG — ${ITEM_PRICE} SEK`;
           addBtn.classList.remove('error-state');
         }, 2200);
         return;
@@ -1083,12 +920,11 @@
       const container = document.getElementById('cartItemsContainer');
       const totalEl = document.getElementById('cartTotal');
       const countEl = document.getElementById('cartCount');
-      const t = translations[currentLang];
 
       countEl.textContent = cart.length;
 
       if (cart.length === 0) {
-        container.innerHTML = `<div style="color: var(--muted-color); margin-top: 20px;">${t.emptyBag}</div>`;
+        container.innerHTML = '<div style="color: var(--muted-color); margin-top: 20px;">BAG IS CURRENTLY EMPTY.</div>';
         totalEl.textContent = '0 SEK';
         return;
       }
@@ -1104,7 +940,7 @@
           <div class="cart-item-info">
             <div style="font-weight: 600;">${item.name}</div>
             <div style="color: var(--muted-color); font-size: 10px;">TAUPE // SIZE ${item.size}</div>
-            <button class="remove-btn" onclick="removeFromCart(${item.id})">[ ${t.remove} ]</button>
+            <button class="remove-btn" onclick="removeFromCart(${item.id})">[ REMOVE ]</button>
           </div>
           <div>${item.price} SEK</div>
         `;
@@ -1156,12 +992,19 @@
     }
 
     function completeOrder() {
-      const t = translations[currentLang];
       const content = document.getElementById('checkoutContent');
       content.innerHTML = `
         <div style="text-align: center; padding: 40px 0; display: flex; flex-direction: column; gap: 16px;">
-          <div style="font-size: 16px; font-weight: 600;">${t.orderSuccessTitle} // #PF-${Math.floor(100000 + Math.random() * 900000)}</div>
+          <div style="font-size: 16px; font-weight: 600;">ORDER CONFIRMED // #PF-${Math.floor(100000 + Math.random() * 900000)}</div>
           <div style="color: #4a453f; line-height: 1.8; text-transform: none;">
-            ${t.orderSuccessMsg}
+            Thank you for your order. We are packaging your PEDA FORM MULE 01 and will send tracking details via email within 24 hours.
           </div>
-          <button class="pay-action-bt
+          <button class="pay-action-btn" onclick="location.reload()" style="margin-top: 16px;">BACK TO STORE</button>
+        </div>
+      `;
+      cart = [];
+      updateCartUI();
+    }
+  </script>
+</body>
+</html>

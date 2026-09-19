@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SLIDE // SUPPLY</title>
+  <title>PEDA FORM // MULE 01</title>
   <style>
     /* =========================================
-       1. GRUNDINSTÄLLNINGAR & YEEZY-ESTETIK
+       1. GRUNDSTILAR & FÄRGPALETT
        ========================================= */
     :root {
-      --bg-color: #e5e1d8;        /* Jordnära "Bone / Chalk" */
-      --text-color: #121212;      /* Nästan svart */
-      --muted-color: #7d7871;     /* Dämpad text */
-      --border-color: #121212;
+      --bg-color: #e6e2d8;        /* Jordnära Yeezy-kalk */
+      --text-color: #161514;      /* Matt kolsvart */
+      --muted-color: #7b766f;     /* Dämpad grå/brun */
+      --border-color: #161514;
+      --card-bg: #ded9cf;
       --font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Neue Haas Grotesk", sans-serif;
     }
 
@@ -46,15 +47,16 @@
       justify-content: space-between;
       align-items: center;
       padding: 24px 32px;
-      background: transparent;
       z-index: 100;
+      mix-blend-mode: multiply;
       pointer-events: none;
     }
 
-    header a, header button {
+    header * {
       pointer-events: auto;
-      color: var(--text-color);
-      text-decoration: none;
+    }
+
+    header button {
       background: none;
       border: none;
       font-family: inherit;
@@ -65,105 +67,128 @@
     }
 
     /* =========================================
-       3. PRODUKTRUTNÄT (THE GRID)
+       3. PRODUKT-LAYOUT (PDP)
        ========================================= */
     main {
-      padding: 120px 32px 64px 32px;
-      max-width: 1600px;
+      padding: 100px 32px 64px 32px;
+      max-width: 1500px;
       margin: 0 auto;
-    }
-
-    .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 64px 40px;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 64px;
     }
 
-    .product-card {
+    /* Vänster spalt: Galleri med de 4 bilderna */
+    .product-gallery {
       display: flex;
       flex-direction: column;
+      gap: 24px;
     }
 
-    .image-container {
+    .gallery-frame {
       width: 100%;
-      aspect-ratio: 1 / 1;
-      background-color: #ded9cf;
+      background-color: var(--card-bg);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      cursor: pointer;
-      position: relative;
     }
 
-    .image-container img {
-      width: 80%;
+    .gallery-frame img {
+      width: 100%;
       height: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 20px 25px rgba(0,0,0,0.12));
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
     }
 
-    .product-card:hover .image-container img {
-      transform: scale(1.05);
+    .gallery-frame:hover img {
+      transform: scale(1.02);
     }
 
-    .product-info {
-      margin-top: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
-    .product-meta {
+    /* Höger spalt: Fast (sticky) köpbox */
+    .product-details {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 24px;
     }
 
-    .product-color {
+    .product-title-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 24px;
+    }
+
+    .product-title {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+    }
+
+    .product-price {
+      font-size: 13px;
       color: var(--muted-color);
     }
 
-    /* Storlekar & Köpknapp direkt under kortet */
-    .purchase-controls {
-      margin-top: 16px;
+    .product-description {
+      line-height: 1.8;
+      color: #4a4641;
+      max-width: 400px;
+    }
+
+    .meta-spec {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 10px;
+      color: var(--muted-color);
+      margin-top: 8px;
+    }
+
+    /* Storlekar & Köpknapp */
+    .size-section {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .size-selector {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
     }
 
     .size-btn {
       background: none;
       border: 1px solid var(--border-color);
-      padding: 6px 10px;
+      padding: 12px 0;
+      text-align: center;
       font-family: inherit;
-      font-size: 10px;
+      font-size: 11px;
       cursor: pointer;
       transition: all 0.2s;
     }
 
-    .size-btn.selected,
-    .size-btn:hover {
+    .size-btn:hover,
+    .size-btn.selected {
       background-color: var(--text-color);
       color: var(--bg-color);
     }
 
     .add-btn {
       width: 100%;
-      padding: 12px;
+      padding: 16px;
       background-color: var(--text-color);
       color: var(--bg-color);
       border: none;
       font-family: inherit;
-      font-size: inherit;
-      letter-spacing: inherit;
+      font-size: 11px;
+      letter-spacing: 0.12em;
       cursor: pointer;
       text-transform: uppercase;
       transition: opacity 0.2s;
@@ -199,7 +224,6 @@
     .cart-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       border-bottom: 1px solid var(--border-color);
       padding-bottom: 16px;
       margin-bottom: 24px;
@@ -217,6 +241,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px dashed #cac4b8;
+      padding-bottom: 12px;
     }
 
     .cart-footer {
@@ -230,16 +256,17 @@
     .cart-total {
       display: flex;
       justify-content: space-between;
+      font-weight: 600;
     }
 
     .checkout-btn {
       width: 100%;
-      padding: 14px;
+      padding: 16px;
       background-color: var(--text-color);
       color: var(--bg-color);
       border: none;
       font-family: inherit;
-      font-size: inherit;
+      font-size: 11px;
       letter-spacing: inherit;
       cursor: pointer;
     }
@@ -260,21 +287,23 @@
     }
 
     /* =========================================
-       5. FOOTER
+       5. RESPONSIVITET (MOBIL)
        ========================================= */
-    footer {
-      padding: 64px 32px 32px 32px;
-      display: flex;
-      justify-content: space-between;
-      color: var(--muted-color);
-      border-top: 1px solid #d4cfc5;
-      margin-top: 64px;
-    }
-
-    @media (max-width: 768px) {
-      main { padding: 90px 16px 32px 16px; }
-      header { padding: 16px; }
-      .product-grid { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+        padding: 80px 16px 32px 16px;
+        gap: 32px;
+      }
+      .product-details {
+        position: static;
+      }
+      .size-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      header {
+        padding: 16px;
+      }
     }
   </style>
 </head>
@@ -282,92 +311,72 @@
 
   <!-- HEADER -->
   <header>
-    <div>SLIDE // SUPPLY™</div>
-    <div>2026 ARCHIVE</div>
-    <button id="cartBtn" onclick="toggleCart()">BAG (<span id="cartCount">0</span>)</button>
+    <div>PEDA FORM™</div>
+    <div>EDITION: 01 // ARCHIVE</div>
+    <button onclick="toggleCart()">BAG (<span id="cartCount">0</span>)</button>
   </header>
 
-  <!-- PRODUKTER -->
+  <!-- HUVUDINNEHÅLL -->
   <main>
-    <div class="product-grid">
+    
+    <!-- GALLERI MED DINA 4 BILDER -->
+    <section class="product-gallery">
+      <!-- Bild 1 -->
+      <div class="gallery-frame">
+        <img src="slide- (1).jpg" alt="PEDA FORM MULE 01 - 1">
+      </div>
 
-      <!-- Produkt 1 -->
-      <article class="product-card" data-name="SLIDE 01" data-color="BONE" data-price="850">
-        <div class="image-container">
-          <!-- Placeholder bild med neutral toffelform -->
-          <img src="https://images.unsplash.com/photo-1603808033192-082d6919d3e1?auto=format&fit=crop&q=80&w=800" alt="Slide Bone">
-        </div>
-        <div class="product-info">
-          <div class="product-meta">
-            <span>SLIDE 01</span>
-            <span class="product-color">BONE</span>
-          </div>
-          <div>850 SEK</div>
-        </div>
-        <div class="purchase-controls">
-          <div class="size-selector">
-            <button class="size-btn" onclick="selectSize(this)">40</button>
-            <button class="size-btn" onclick="selectSize(this)">41</button>
-            <button class="size-btn" onclick="selectSize(this)">42</button>
-            <button class="size-btn" onclick="selectSize(this)">43</button>
-            <button class="size-btn" onclick="selectSize(this)">44</button>
-          </div>
-          <button class="add-btn" onclick="addToCart(this)">ADD TO BAG</button>
-        </div>
-      </article>
+      <!-- Bild 2 -->
+      <div class="gallery-frame">
+        <img src="slide- (2).jpg" alt="PEDA FORM MULE 01 - 2">
+      </div>
 
-      <!-- Produkt 2 -->
-      <article class="product-card" data-name="SLIDE 01" data-color="ONYX" data-price="850">
-        <div class="image-container">
-          <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=800" alt="Slide Onyx">
-        </div>
-        <div class="product-info">
-          <div class="product-meta">
-            <span>SLIDE 01</span>
-            <span class="product-color">ONYX</span>
-          </div>
-          <div>850 SEK</div>
-        </div>
-        <div class="purchase-controls">
-          <div class="size-selector">
-            <button class="size-btn" onclick="selectSize(this)">40</button>
-            <button class="size-btn" onclick="selectSize(this)">41</button>
-            <button class="size-btn" onclick="selectSize(this)">42</button>
-            <button class="size-btn" onclick="selectSize(this)">43</button>
-            <button class="size-btn" onclick="selectSize(this)">44</button>
-          </div>
-          <button class="add-btn" onclick="addToCart(this)">ADD TO BAG</button>
-        </div>
-      </article>
+      <!-- Bild 3 -->
+      <div class="gallery-frame">
+        <img src="slide- (3).jpg" alt="PEDA FORM MULE 01 - 3">
+      </div>
 
-      <!-- Produkt 3 -->
-      <article class="product-card" data-name="SLIDE 01" data-color="RESIN" data-price="850">
-        <div class="image-container">
-          <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&q=80&w=800" alt="Slide Resin">
-        </div>
-        <div class="product-info">
-          <div class="product-meta">
-            <span>SLIDE 01</span>
-            <span class="product-color">RESIN</span>
-          </div>
-          <div>850 SEK</div>
-        </div>
-        <div class="purchase-controls">
-          <div class="size-selector">
-            <button class="size-btn" onclick="selectSize(this)">40</button>
-            <button class="size-btn" onclick="selectSize(this)">41</button>
-            <button class="size-btn" onclick="selectSize(this)">42</button>
-            <button class="size-btn" onclick="selectSize(this)">43</button>
-            <button class="size-btn" onclick="selectSize(this)">44</button>
-          </div>
-          <button class="add-btn" onclick="addToCart(this)">ADD TO BAG</button>
-        </div>
-      </article>
+      <!-- Bild 4 -->
+      <div class="gallery-frame">
+        <img src="slide- (4).jpg" alt="PEDA FORM MULE 01 - 4">
+      </div>
+    </section>
 
-    </div>
+    <!-- KÖPBOX / PRODUKTINFO -->
+    <section class="product-details">
+      <div class="product-title-section">
+        <h1 class="product-title">PEDA FORM // MULE 01</h1>
+        <div class="product-price">1 150 SEK</div>
+      </div>
+
+      <div class="product-description">
+        MOLDED EVA FOAM BODY WITH INTEGRATED ARCH CONTOUR. MATTE BRUSHED HARDWARE BUCKLE FASTENER WITH INDUSTRIAL GRADE RUBBER STRAP. WATER RESISTANT.
+      </div>
+
+      <div class="meta-spec">
+        <span>COLORWAY: TAUPE / ASH MUD</span>
+        <span>MATERIAL: 100% INJECTION EVA / STEEL</span>
+        <span>FIT: TRUE TO SIZE (ORDER UP FOR HALF SIZES)</span>
+      </div>
+
+      <div class="size-section">
+        <span>SELECT SIZE (EU):</span>
+        <div class="size-grid">
+          <button class="size-btn" onclick="selectSize(this)">40</button>
+          <button class="size-btn" onclick="selectSize(this)">41</button>
+          <button class="size-btn" onclick="selectSize(this)">42</button>
+          <button class="size-btn" onclick="selectSize(this)">43</button>
+          <button class="size-btn" onclick="selectSize(this)">44</button>
+          <button class="size-btn" onclick="selectSize(this)">45</button>
+        </div>
+
+        <button class="add-btn" onclick="addToCart()">ADD TO BAG</button>
+      </div>
+    </section>
+
   </main>
 
-  <!-- VARUKORG DRAW & OVERLAY -->
+  <!-- VARUKORG & OVERLAY -->
   <div class="overlay" id="overlay" onclick="toggleCart()"></div>
 
   <aside class="cart-drawer" id="cartDrawer">
@@ -387,42 +396,32 @@
     </div>
   </aside>
 
-  <!-- FOOTER -->
-  <footer>
-    <div>ALL RIGHTS RESERVED // STOCKHOLM</div>
-    <div>REGION: SE [SEK]</div>
-  </footer>
-
-  <!-- MINIMAL LOGIK -->
+  <!-- LOGIK -->
   <script>
     let cart = [];
+    let selectedSize = null;
 
     function selectSize(btn) {
-      // Välj storlek inom samma produktkort
-      const parent = btn.closest('.size-selector');
-      parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
+      selectedSize = btn.textContent;
     }
 
-    function addToCart(btn) {
-      const card = btn.closest('.product-card');
-      const selectedSize = card.querySelector('.size-btn.selected');
-
+    function addToCart() {
       if (!selectedSize) {
-        alert('VÄNLIGEN VÄLJ EN STORLEK FÖRST');
+        alert('VÄNLIGEN VÄLJ EN STORLEK FÖRST.');
         return;
       }
 
-      const product = {
-        name: card.dataset.name,
-        color: card.dataset.color,
-        price: parseInt(card.dataset.price),
-        size: selectedSize.textContent
-      };
+      cart.push({
+        name: 'PEDA FORM // MULE 01',
+        color: 'TAUPE',
+        size: selectedSize,
+        price: 1150
+      });
 
-      cart.push(product);
       updateCartUI();
-      toggleCart(true); // Öppna varukorgen automatiskt
+      toggleCart(true);
     }
 
     function updateCartUI() {
@@ -433,7 +432,7 @@
       countEl.textContent = cart.length;
 
       if (cart.length === 0) {
-        container.innerHTML = '<div style="color: var(--muted-color); margin-top: 20px;">BAG IS EMPTY.</div>';
+        container.innerHTML = '<div style="color: var(--muted-color); margin-top: 20px;">BAG IS CURRENTLY EMPTY.</div>';
         totalEl.textContent = '0 SEK';
         return;
       }
@@ -441,14 +440,14 @@
       container.innerHTML = '';
       let total = 0;
 
-      cart.forEach((item, index) => {
+      cart.forEach((item) => {
         total += item.price;
         const itemEl = document.createElement('div');
         itemEl.className = 'cart-item';
         itemEl.innerHTML = `
           <div>
-            <div>${item.name} — ${item.color}</div>
-            <div style="color: var(--muted-color); margin-top: 2px;">SZ: ${item.size}</div>
+            <div>${item.name}</div>
+            <div style="color: var(--muted-color); margin-top: 2px;">COLOR: ${item.color} / SZ: ${item.size}</div>
           </div>
           <div>${item.price} SEK</div>
         `;
